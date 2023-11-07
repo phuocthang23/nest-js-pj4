@@ -34,6 +34,9 @@ export class Size {
   })
   sizeProducts: ProductSize[];
 
-  @OneToMany(() => Cart, (cart) => cart.size, {})
+  @OneToMany(() => Cart, (cart) => cart.size, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   carts: Cart[];
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Product } from './enities/product.entity';
 import { ProductRepository } from './product.repository';
-import { productDto } from './dtos/product.dto';
+// import { productDto } from './dtos/product.dto';
 import { ImageProductService } from '../image-product/image-product.service';
 import { SizeProductService } from '../size-product/size-product.service';
 
@@ -21,17 +21,24 @@ export class ProductService {
     return await this.productRepository.findProductById(id);
   }
 
-  async create(data: productDto): Promise<any> {
+  async create(req: any): Promise<any> {
+    const data = {
+      nameProduct: req.nameProduct,
+      categoryId: req.categoryId,
+      price: +req.price,
+      stock: +req.stock,
+      description: req.description,
+    };
+
     const createdProduct = await this.productRepository.create(data);
 
-    const sizeArray = JSON.parse(data.size);
-    console.log(sizeArray);
+    const sizeArray = JSON.parse(req.size);
 
     // Upload hình ảnh cho sản phẩm
-    if (data.images && data.images.length > 0) {
+    if (req.images && req.images.length > 0) {
       await this.imageProductService.createImagesForProduct(
         createdProduct.id,
-        data.images,
+        req.images,
       );
     }
 
@@ -56,15 +63,33 @@ export class ProductService {
     const response = await this.productRepository.update(id, data);
     if (response) {
       return {
+        susses: true,
         message: 'Product updated successfully',
       };
     }
     return {
+      susses: false,
       message: 'Product updated failed',
     };
   }
 
   async delete(id: number): Promise<any> {
-    return await this.productRepository.delete(id);
+    const findProductById = await this.productRepository.findOneProductById(id);
+    if (!findProductById) {
+      throw new Error('Product not found');
+    }
+    const changeStatus = findProductById.status === 0 ? 1 : 0;
+    const response = await this.productRepository.update(id, {
+      status: changeStatus,
+    });
+    if (response.affected === 1) {
+      return changeStatus === 1
+        ? 'User has been blocked'
+        : 'Block operation did not work';
+    } else {
+      throw new Error('Error updating user status');
+    }
+
+    // return await this.productRepository.delete(id);
   }
 }

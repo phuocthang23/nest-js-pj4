@@ -26,6 +26,12 @@ export class ImageProductController {
     return await this.imageProductService.findAll();
   }
 
+  //get image by product id
+  @Get('/:id')
+  async getImageByProductId(@Param('id') id: number) {
+    return await this.imageProductService.findImageById(id);
+  }
+
   @Put('update/:id')
   @UseInterceptors(FileInterceptor('image'))
   async updateProduct(

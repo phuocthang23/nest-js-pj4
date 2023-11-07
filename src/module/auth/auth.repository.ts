@@ -12,11 +12,13 @@ export class AuthRepository {
         email: data.email,
       },
     });
-    console.log(checkEmail);
+
     return checkEmail;
   }
 
-  async register(data: CreateUserParams): Promise<User | { message: string }> {
+  async register(
+    data: CreateUserParams,
+  ): Promise<User | { message: string; success: boolean }> {
     return await this.rep.save(data);
   }
 }

@@ -21,8 +21,8 @@ export class ImageProductRepository {
     return await this.rep.update(id, data);
   }
 
-  //find user by id
-  async findAddressById(id: number): Promise<imageProduct> {
-    return await this.rep.findOneBy({ id });
+  //find Imgae by product id
+  async findImageById(id: number): Promise<any> {
+    return await this.rep.find({ where: { productId: id } });
   }
 }

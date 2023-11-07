@@ -14,6 +14,7 @@ import { SizeProductRepository } from '../size-product/size-product.repository';
 import { ProductSize } from '../size-product/entities/product-size.entity';
 import { SizeProductModule } from '../size-product/size-product.module';
 import { SizeProductService } from '../size-product/size-product.service';
+import { DataFromToken } from 'src/shared/utils/dataFormToken';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { SizeProductService } from '../size-product/size-product.service';
     ImageProductRepository,
     SizeProductRepository,
     SizeProductService,
+    DataFromToken,
   ],
 })
 export class ProductModule {}

@@ -17,10 +17,11 @@ export class AuthService {
 
   async createUsers(
     data: CreateUserParams,
-  ): Promise<{ message: string } | User> {
+  ): Promise<{ message: string; success: boolean } | User> {
     const checkEmail = await this.authRepository.getUserByEmail(data);
     if (checkEmail) {
       return {
+        success: false,
         message: 'Email already exists',
       };
     } else {
@@ -41,7 +42,7 @@ export class AuthService {
     if (!checkUser) {
       throw new HttpException('email is not exist', HttpStatus.UNAUTHORIZED); //* kiểm tra user
     }
-    console.log(data, checkUser.password);
+    // console.log(data, checkUser.password);
     const checkPassword = bcrypt.compareSync(data.password, checkUser.password);
     if (!checkPassword) {
       throw new HttpException(
@@ -56,7 +57,6 @@ export class AuthService {
       email: checkUser.email,
       roleId: checkUser.roleId,
     };
-    console.log(payload);
     return {
       data: checkUser,
       access_token: await this.jwt.generateToken(payload),

@@ -28,4 +28,9 @@ export class CategoriesService {
       };
     }
   }
+
+  //delete
+  async delete(id: number): Promise<any> {
+    return await this.categoryRepository.delete(id);
+  }
 }

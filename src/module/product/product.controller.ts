@@ -7,15 +7,19 @@ import {
   Post,
   Put,
   UploadedFiles,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { productDto } from './dtos/product.dto';
 import { CloudinaryService } from 'src/shared/cloudinary/cloudinary.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from 'src/shared/guard/checkAuth.guard';
+import { AdminGuard } from 'src/shared/guard/verifyRole.guard';
 // import { FormDataRequest } from 'nestjs-form-data';
 
 @Controller('product')
+// @UseGuards(AdminGuard)
 export class ProductController {
   constructor(
     private productService: ProductService,
@@ -23,6 +27,8 @@ export class ProductController {
   ) {}
 
   @Post('/create')
+  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
   // @FormDataRequest()
   @UseInterceptors(FilesInterceptor('images'))
   async createProduct(
@@ -30,7 +36,6 @@ export class ProductController {
     @UploadedFiles() images: Express.Multer.File[],
   ) {
     try {
-      console.log(data.size);
       // Tải lên ảnh lên Cloudinary
       const imageResponses =
         await this.cloudinaryService.uploadMultipleFiles(images);
@@ -38,7 +43,6 @@ export class ProductController {
       // Lấy các URL của ảnh từ Cloudinary responses
       const imageUrls = imageResponses.map((response) => response.secure_url);
 
-      console.log(imageUrls);
       // Cập nhật đường dẫn hình ảnh vào dữ liệu sản phẩm
       data.images = imageUrls;
 
@@ -63,11 +67,15 @@ export class ProductController {
   }
 
   @Put('update/:id')
+  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
   updateProduct(@Param('id') id: number, @Body() body: any) {
     return this.productService.update(id, body);
   }
 
   @Delete('delete/:id')
+  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
   deleteProduct(@Param('id') id: number) {
     return this.productService.delete(id);
   }

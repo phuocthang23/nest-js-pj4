@@ -1,12 +1,12 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './enities/product.entity';
 import { Repository } from 'typeorm';
-import { productDto } from './dtos/product.dto';
+// import { productDto } from './dtos/product.dto';
 
 export class ProductRepository {
   constructor(@InjectRepository(Product) private rep: Repository<Product>) {}
 
-  async create(data: productDto): Promise<Product> {
+  async create(data: any): Promise<Product> {
     return await this.rep.save(data);
   }
 
@@ -16,7 +16,7 @@ export class ProductRepository {
     });
   }
   async findProductById(id: number): Promise<any> {
-    return await this.rep.find({
+    return await this.rep.findOne({
       where: { id: id },
       relations: ['category', 'sizes', 'imageProducts'],
     });

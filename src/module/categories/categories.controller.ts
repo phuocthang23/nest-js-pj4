@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -35,7 +36,15 @@ export class CategoriesController {
   }
 
   @Put('/update/:id')
+  @UseGuards(AdminGuard)
   updateCategoryById(@Param('id') id: number, @Body() body: categoryDto) {
     return this.category.update(id, body);
+  }
+
+  //delete
+  @Delete('/delete/:id')
+  @UseGuards(AdminGuard)
+  deleteCategoryById(@Param('id') id: number) {
+    return this.category.delete(id);
   }
 }

@@ -10,9 +10,15 @@ export class ProductSize {
   @PrimaryColumn()
   productId: number;
 
-  @ManyToOne(() => Product, (product) => product.sizeProducts)
+  @ManyToOne(() => Product, (product) => product.sizeProducts, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   product: Product;
 
-  @ManyToOne(() => Size, (Size) => Size.sizeProducts)
+  @ManyToOne(() => Size, (Size) => Size.sizeProducts, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   size: Size;
 }
