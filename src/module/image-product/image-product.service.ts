@@ -39,4 +39,8 @@ export class ImageProductService {
       throw new Error('No image data provided');
     }
   }
+
+  async findImageById(id: number): Promise<imageProduct> {
+    return await this.imageProductRepository.findImageById(id);
+  }
 }

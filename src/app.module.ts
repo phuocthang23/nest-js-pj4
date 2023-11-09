@@ -35,7 +35,7 @@ import { OrderModule } from './module/order/order.module';
     JwtModule.register({
       global: true,
       secret: process.env.SECRET_TOKEN,
-      signOptions: { expiresIn: '1d', algorithm: 'HS256' }, //* check
+      signOptions: { expiresIn: '10d', algorithm: 'HS256' }, //* check
     }),
   ],
   controllers: [],

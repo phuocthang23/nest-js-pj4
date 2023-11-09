@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserParams } from 'src/shared/utils/types';
@@ -14,6 +14,16 @@ export class RepositoryUser {
       },
     });
     return checkEmail;
+  }
+
+  async findUserBySearch(data): Promise<User[]> {
+    return await this.rep.find({
+      where: [
+        { lastName: ILike(`%${data}%`) },
+        { firstName: ILike(`%${data}%`) },
+        { email: ILike(`%${data}%`) },
+      ],
+    });
   }
 
   // async create(data: any): Promise<User | { message: string }> {

@@ -14,6 +14,11 @@ export class UserService {
     return await this.userRep.findAll();
   }
 
+  async searchUser(data: string): Promise<User[]> {
+    const allUser = await this.userRep.findUserBySearch(data);
+    return allUser;
+  }
+
   async updateUsers(id: number, data: CreateUserParams): Promise<any> {
     const checkUser = await this.userRep.findUserById(id);
     if (checkUser) {
@@ -37,7 +42,7 @@ export class UserService {
     return await this.userRep.findUserById(id);
   }
 
-  async changeStatus(id: number): Promise<any> {
+  async changeStatus(id: number, body: any): Promise<any> {
     const checkUser = await this.userRep.findUserById(id);
     if (!checkUser) {
       throw new Error('User not found');

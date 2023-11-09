@@ -30,4 +30,9 @@ export class CategoryRepository {
   async findAddressById(id: number): Promise<Categories> {
     return await this.rep.findOneBy({ id });
   }
+
+  //delete
+  async delete(id: number): Promise<any> {
+    return await this.rep.delete(id);
+  }
 }
