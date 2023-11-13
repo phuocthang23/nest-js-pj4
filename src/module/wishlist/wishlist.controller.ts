@@ -34,8 +34,8 @@ export class WishlistController {
   @Get('/me')
   async getCart(@Request() request: Request) {
     const userIdFromToken = this.dataFromToken.getData(request);
-    console.log(userIdFromToken, '--------------');
-    return this.wishlistService.getCart(userIdFromToken);
+    console.log(await this.wishlistService.getWishListUser(userIdFromToken));
+    return await this.wishlistService.getWishListUser(userIdFromToken);
   }
 
   //deleteByUserId

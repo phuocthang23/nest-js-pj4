@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { Order } from 'src/module/order/entities/order.entity';
 import { Role } from 'src/module/role/entities/role.entity';
 import {
   Entity,
@@ -8,6 +9,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('users')
@@ -49,4 +51,7 @@ export class User {
   @ManyToOne(() => Role, (role) => role.users)
   @JoinColumn({ name: 'roleId' })
   role: Role;
+
+  @OneToMany(() => Order, (order) => order.user) // Thay đổi tên của trường users thành user
+  orders: Order[];
 }

@@ -12,3 +12,7 @@ export type LoginUser = {
   email: string;
   password: string;
 };
+
+export interface ISearch {
+  data: string;
+}

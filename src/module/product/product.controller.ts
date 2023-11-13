@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
@@ -57,8 +58,8 @@ export class ProductController {
   }
 
   @Get('/')
-  getAllProducts() {
-    return this.productService.findAll();
+  getAllProducts(@Query() data: any) {
+    return this.productService.findAll(data);
   }
 
   @Get('/:id')
@@ -79,4 +80,16 @@ export class ProductController {
   deleteProduct(@Param('id') id: number) {
     return this.productService.delete(id);
   }
+
+  @Get('/category/:id')
+  getProductByCategory(@Param('id') id: number) {
+    return this.productService.findProductByCategory(id);
+  }
+
+  // @Get('/search')
+  // // @UseGuards(AdminGuard)
+  // searchUser(@Query() data: any) {
+  //   const query = data.data;
+  //   return this.productService.searchProduct(query);
+  // }
 }

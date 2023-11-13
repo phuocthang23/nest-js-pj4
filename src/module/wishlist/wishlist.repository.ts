@@ -33,7 +33,7 @@ export class WishlistRepository {
   //   }
 
   //find user by id
-  async findCartByUserId(id: number): Promise<any[]> {
+  async findWishListByUserId(id: number): Promise<any[]> {
     return await this.rep.find({
       where: { userId: id },
       relations: ['product'],

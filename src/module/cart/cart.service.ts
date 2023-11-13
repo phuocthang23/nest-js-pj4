@@ -7,9 +7,9 @@ import { CartRepository } from './cart.repository';
 export class CartService {
   constructor(private cartRepository: CartRepository) {}
 
-  async addToCarts(data: CartDto): Promise<any> {
+  async addToCarts(data: CartDto, id: any): Promise<any> {
     const userCart = await this.cartRepository.findUserCart(
-      data.userId,
+      id,
       data.productId,
       data.sizeId,
     );
@@ -20,7 +20,7 @@ export class CartService {
       });
     } else {
       return await this.cartRepository.create({
-        userId: data.userId,
+        userId: id,
         productId: data.productId,
         sizeId: data.sizeId,
         quantity: data.quantity,
@@ -29,7 +29,7 @@ export class CartService {
   }
 
   async getCart(id: number): Promise<any> {
-    console.log(id, '----------');
+    // console.log(id, '----------');
     return await this.cartRepository.findCartByUserId(id);
   }
 

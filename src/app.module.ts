@@ -14,6 +14,10 @@ import { ProductModule } from './module/product/product.module';
 import { ImageProductModule } from './module/image-product/image-product.module';
 import { SizeModule } from './module/size/size.module';
 import { OrderModule } from './module/order/order.module';
+
+import { MailModule } from './module/email/mail.module';
+import { SocketGateway } from './socket';
+import { PassportModule } from '@nestjs/passport';
 // import { SizeProductModule } from './module/size-product/size-product.module';
 
 @Module({
@@ -32,11 +36,14 @@ import { OrderModule } from './module/order/order.module';
     SizeModule,
     OrderModule,
     WishlistModule,
+    MailModule,
+    SocketGateway,
     JwtModule.register({
       global: true,
       secret: process.env.SECRET_TOKEN,
       signOptions: { expiresIn: '10d', algorithm: 'HS256' }, //* check
     }),
+    PassportModule.register({ session: true }),
   ],
   controllers: [],
 })

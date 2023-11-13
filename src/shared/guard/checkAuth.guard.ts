@@ -23,7 +23,6 @@ export class AuthGuard implements CanActivate {
     try {
       const user = await this.jwtService.verifyAsync(token);
       request.user = user; // Lưu thông tin người dùng vào request
-      // await this.dataFromToken.getData(request); // Lấy dữ liệu từ token
       return true; // Token hợp lệ, cho phép truy cập
     } catch (error) {
       console.error(11111, error);

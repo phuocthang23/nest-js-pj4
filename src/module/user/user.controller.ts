@@ -6,6 +6,7 @@ import {
   Patch,
   UseGuards,
   Request,
+  Query,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/user.dto';
 import { UserService } from './user.service';
@@ -27,8 +28,9 @@ export class UserController {
   @UseGuards(AuthGuard)
   @UseGuards(AdminGuard)
   // @UseGuards(AdminGuard)
-  getUser() {
-    return this.userService.findAll();
+  getUser(@Query() data: any) {
+    console.log(data);
+    return this.userService.findAll(data);
   }
 
   @Get('/userdetail')
@@ -36,15 +38,6 @@ export class UserController {
   getOneUser(@Request() request: Request) {
     const userIdFromToken = this.dataFromToken.getData(request);
     return this.userService.findOne(Number(userIdFromToken));
-  }
-
-  @Get('/search/:data')
-  @UseGuards(AuthGuard)
-  // @UseGuards(AdminGuard)
-  searchUser(@Param('data') data: any) {
-    // const userIdFromToken = this.dataFromToken.getData(request);
-    // const data = request.query.data;
-    return this.userService.searchUser(data);
   }
 
   @Patch('/update')
@@ -58,7 +51,6 @@ export class UserController {
   @UseGuards(AuthGuard)
   @UseGuards(AdminGuard)
   ChangeStatus(@Param('id') id: number, @Body() body: any) {
-    console.log(body);
     return this.userService.changeStatus(id, body);
   }
 }

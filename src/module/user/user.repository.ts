@@ -31,8 +31,15 @@ export class RepositoryUser {
   // }
 
   //find all
-  async findAll(): Promise<User[]> {
-    return this.rep.find({ relations: ['role'] });
+  async findAll(data: any): Promise<User[]> {
+    return this.rep.find({
+      where: data.data && [
+        { lastName: ILike(`%${data.data}%`) },
+        { firstName: ILike(`%${data.data}%`) },
+        { email: ILike(`%${data.data}%`) },
+      ],
+      relations: ['role'],
+    });
   }
 
   async update(id: number, data: CreateUserParams) {
