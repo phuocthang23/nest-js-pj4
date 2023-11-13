@@ -21,7 +21,7 @@ export class OrderRepository {
   }
 
   async findAll() {
-    return await this.rep.find({ relations: ['orderItems'] });
+    return await this.rep.find({ relations: ['orderItems', 'user'] });
   }
 
   //update
@@ -29,30 +29,16 @@ export class OrderRepository {
     console.log(status);
     return await this.rep.update(id, status);
   }
-  //   async findUserCart() {}
 
-  //   async update(id: number, data: any) {
-  //     return await this.rep.update(id, data);
-  //   }
-  //   //   find all
-  //   async findAll(): Promise<CartDto[]> {
-  //     return this.rep.find({ relations: ['product'] });
-  //   }
+  // find one by id
+  async findOne(id: number) {
+    return await this.rep.find({ where: { userId: id } });
+  }
 
-  //   //   async update(id: number, data: CartDto) {
-  //   //     return await this.rep.update(id, data);
-  //   //   }
-
-  //   //find user by id
-  //   async findCartByUserId(id: number): Promise<CartDto> {
-  //     return await this.rep.findOne({
-  //       where: { userId: id },
-  //       relations: ['product', 'size'],
-  //     });
-  //   }
-
-  //   //deleteByUserId
-  //   async deleteByUserId(id: number) {
-  //     return await this.rep.delete({ id });
-  //   }
+  async findOrderById(id: number) {
+    return await this.rep.findOne({
+      where: { id: id },
+      relations: ['orderItems', 'user'],
+    });
+  }
 }

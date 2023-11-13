@@ -42,6 +42,9 @@ export class Product {
   @Column({ type: 'int', nullable: false, default: 0 })
   status: number;
 
+  @Column({ type: 'int', nullable: false, default: 0 })
+  count: number;
+
   @CreateDateColumn({ type: 'timestamp', select: false })
   createdAt: Date;
 

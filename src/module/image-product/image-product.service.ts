@@ -30,6 +30,7 @@ export class ImageProductService {
       const updateResult = await this.imageProductRepository.update(id, data);
       if (updateResult.affected === 1) {
         return {
+          data: data,
           message: 'Image updated successfully',
         };
       } else {

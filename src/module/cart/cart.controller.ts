@@ -22,8 +22,10 @@ export class CartController {
   ) {}
 
   @Post('/create')
-  async addToCart(@Body() body: CartDto) {
-    return await this.cartService.addToCarts(body);
+  @UseGuards(AuthGuard)
+  async addToCart(@Body() body: CartDto, @Request() request: Request) {
+    const userIdFromToken = this.dataFromToken.getData(request);
+    return await this.cartService.addToCarts(body, userIdFromToken);
   }
 
   @Get('/')

@@ -21,8 +21,6 @@ export class RoleRepository {
       },
     });
 
-    console.log(checkRole);
-
     if (checkRole) {
       throw new Error('Vai trò đã tồn tại');
     }

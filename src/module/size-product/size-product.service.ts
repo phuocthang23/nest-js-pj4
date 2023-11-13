@@ -13,7 +13,6 @@ export class SizeProductService {
           sizeId: size,
           productId: productId,
         });
-        console.log(size, productId);
       }),
     );
     return productSize;

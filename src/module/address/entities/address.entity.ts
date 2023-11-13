@@ -14,7 +14,10 @@ export class Address {
   id: number;
 
   @Column({ nullable: false })
-  address: string;
+  district: string;
+
+  @Column({ nullable: false })
+  ward: string;
 
   @Column({ nullable: false })
   phoneNumber: number;

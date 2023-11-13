@@ -4,6 +4,7 @@ import { ProductRepository } from './product.repository';
 // import { productDto } from './dtos/product.dto';
 import { ImageProductService } from '../image-product/image-product.service';
 import { SizeProductService } from '../size-product/size-product.service';
+import { ISearch } from 'src/shared/utils/types';
 
 @Injectable()
 export class ProductService {
@@ -13,8 +14,8 @@ export class ProductService {
     private sizeProductService: SizeProductService,
   ) {}
 
-  async findAll(): Promise<Product[]> {
-    return await this.productRepository.findAll();
+  async findAll(data: ISearch): Promise<Product[]> {
+    return await this.productRepository.findAll(data);
   }
 
   async findOne(id: number): Promise<Product> {
@@ -92,4 +93,12 @@ export class ProductService {
 
     // return await this.productRepository.delete(id);
   }
+
+  async findProductByCategory(id: number): Promise<Product[]> {
+    return await this.productRepository.findProductByCategory(id);
+  }
+
+  // async searchProduct(query: any): Promise<any> {
+  //   return await this.productRepository.searchProduct(query);
+  // }
 }

@@ -9,6 +9,7 @@ export class WishlistService {
     const userCart = await this.wishlistRepository.findUserWishList(
       userIdFromToken,
       data.productId,
+      // data.sizeId,
     );
 
     if (userCart) {
@@ -17,12 +18,14 @@ export class WishlistService {
       return await this.wishlistRepository.create({
         userId: userIdFromToken,
         productId: data.productId,
+        // sizeId: data.sizeId,
       });
     }
   }
 
-  async getCart(id: number): Promise<any> {
-    return await this.wishlistRepository.findCartByUserId(id);
+  async getWishListUser(id: number): Promise<any> {
+    console.log(id);
+    return await this.wishlistRepository.findWishListByUserId(id);
   }
 
   async getAll(): Promise<any> {

@@ -1,6 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './enities/product.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
+import { ISearch } from 'src/shared/utils/types';
 // import { productDto } from './dtos/product.dto';
 
 export class ProductRepository {
@@ -10,8 +11,9 @@ export class ProductRepository {
     return await this.rep.save(data);
   }
 
-  async findAll(): Promise<Product[]> {
+  async findAll(data: ISearch): Promise<Product[]> {
     return await this.rep.find({
+      where: data.data && { nameProduct: ILike(`%${data.data}%`) },
       relations: ['category', 'sizes', 'imageProducts'],
     });
   }
@@ -40,4 +42,17 @@ export class ProductRepository {
   async delete(id: number): Promise<any> {
     return await this.rep.delete(id);
   }
+
+  async findProductByCategory(id: number): Promise<Product[]> {
+    return await this.rep.find({
+      where: { categoryId: id },
+      relations: ['category', 'sizes', 'imageProducts'],
+    });
+  }
+
+  // async searchProduct(query: any): Promise<Product[]> {
+  //   return await this.rep.find({
+  //     where: [{ nameProduct: ILike(`%${query}%`) }],
+  //   });
+  // }
 }

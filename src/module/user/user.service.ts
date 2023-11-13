@@ -9,9 +9,8 @@ import { User } from './entities/user.entity';
 export class UserService {
   constructor(private userRep: RepositoryUser) {}
 
-  async findAll(): Promise<User[]> {
-    console.log(this.userRep);
-    return await this.userRep.findAll();
+  async findAll(data: any): Promise<User[]> {
+    return await this.userRep.findAll(data);
   }
 
   async searchUser(data: string): Promise<User[]> {
@@ -43,6 +42,7 @@ export class UserService {
   }
 
   async changeStatus(id: number, body: any): Promise<any> {
+    console.log(body);
     const checkUser = await this.userRep.findUserById(id);
     if (!checkUser) {
       throw new Error('User not found');

@@ -1,5 +1,6 @@
 // import { Address } from 'src/module/address/entities/address.entity';
 import { OrderItem } from 'src/module/order-item/entities/orderItem.entity';
+import { User } from 'src/module/user/entities/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,6 +8,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToOne,
   // ManyToOne,
 } from 'typeorm';
 
@@ -21,15 +23,39 @@ export class Order {
   @Column({ type: 'int', nullable: false, default: 1 })
   status: number;
 
-  @CreateDateColumn({ type: 'timestamp', select: false })
+  @Column({ type: 'int', nullable: true })
+  subTotal: number;
+
+  @Column({ type: 'int', nullable: true })
+  total: number;
+
+  @Column({ type: 'varchar', nullable: true })
+  street: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  districtName: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  wardName: string;
+
+  @Column({ type: 'int', nullable: true })
+  ship: number;
+
+  @Column({ type: 'int', nullable: true })
+  code: number;
+
+  @Column({ type: 'int', nullable: false })
+  payment: number;
+
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp', select: false })
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order, { eager: true })
   orderItems: OrderItem[];
 
-  // @ManyToOne(() => Address, (address) => address.orders)
-  // address: Address;
+  @ManyToOne(() => User, (user) => user.orders) // Thay đổi tên của trường users thành user
+  user: User;
 }

@@ -39,14 +39,12 @@ export class ImageProductController {
     // @Body() body: imgProductDto,
     @UploadedFile() image: Express.Multer.File,
   ) {
-    console.log(image);
-
     const imageResponse = await this.cloudinaryService.uploadSingleFile(image);
     console.log(imageResponse, 'imageResponse');
     const updatedImage = await this.imageProductService.updateImage(id, {
       src: imageResponse.secure_url,
     });
-    console.log(updatedImage, 'updatedImage');
+    // console.log(updatedImage, 'updatedImage');
     return updatedImage;
   }
 }
