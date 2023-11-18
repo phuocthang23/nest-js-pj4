@@ -15,7 +15,11 @@ export class CategoryRepository {
 
   //find all
   async findAll(): Promise<Categories[]> {
-    return this.rep.find();
+    return this.rep.find({
+      order: {
+        id: 'DESC',
+      },
+    });
   }
 
   async update(id: number, data: Categories): Promise<any | boolean> {

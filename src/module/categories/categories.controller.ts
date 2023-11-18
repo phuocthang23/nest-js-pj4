@@ -14,7 +14,6 @@ import { AuthGuard } from 'src/shared/guard/checkAuth.guard';
 import { AdminGuard } from 'src/shared/guard/verifyRole.guard';
 
 @Controller('categories')
-@UseGuards(AuthGuard)
 export class CategoriesController {
   constructor(private category: CategoriesService) {}
 
@@ -36,6 +35,7 @@ export class CategoriesController {
   }
 
   @Put('/update/:id')
+  @UseGuards(AuthGuard)
   @UseGuards(AdminGuard)
   updateCategoryById(@Param('id') id: number, @Body() body: categoryDto) {
     return this.category.update(id, body);
