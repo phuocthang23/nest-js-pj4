@@ -13,6 +13,9 @@ export class ProductRepository {
 
   async findAll(data: ISearch): Promise<Product[]> {
     return await this.rep.find({
+      order: {
+        id: 'DESC',
+      },
       where: data.data && { nameProduct: ILike(`%${data.data}%`) },
       relations: ['category', 'sizes', 'imageProducts'],
     });
